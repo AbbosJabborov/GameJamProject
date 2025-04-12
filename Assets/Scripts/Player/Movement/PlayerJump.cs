@@ -14,6 +14,10 @@ namespace Player.Movement
         public Transform groundCheck;
         public float groundCheckRadius = 0.2f;
         public LayerMask groundLayer;
+        
+        [Header("Better Jump Settings")]
+        public float fallMultiplier = 2.5f;
+        public float lowJumpMultiplier = 2f;
 
         private Rigidbody2D _rb;
         private bool _isGrounded;
@@ -40,6 +44,17 @@ namespace Player.Movement
             {
                 Jump();
             }
+            
+            // Better gravity control
+            if (_rb.velocity.y < 0)
+            {
+                _rb.velocity += Vector2.up * (Physics2D.gravity.y * (fallMultiplier - 1) * Time.deltaTime);
+            }
+            else if (_rb.velocity.y > 0 && !Input.GetButton("Jump"))
+            {
+                _rb.velocity += Vector2.up * (Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.deltaTime);
+            }
+
         }
 
         private void Jump()
