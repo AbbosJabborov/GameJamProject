@@ -28,6 +28,7 @@ namespace Player.Movement
         private float _moveInput;
         private bool _isRunning;
         private bool _canSlide = true;
+        
 
         private void Awake()
         {
@@ -44,21 +45,22 @@ namespace Player.Movement
             _isRunning = Input.GetKey(KeyCode.LeftShift);
 
             // Slide input
-            if (Input.GetKeyDown(KeyCode.LeftControl) && _canSlide && _moveInput != 0 && !_isSliding)
+            if(Input.GetKeyDown(KeyCode.LeftControl) && _canSlide && _moveInput != 0 && !_isSliding)
             {
                 StartCoroutine(Slide());
             }
 
             // Flip sprite
-            if (_moveInput != 0 && !_isSliding)
+            if(_moveInput != 0 && !_isSliding)
                 _sr.flipX = _moveInput < 0;
 
             // Animation triggers (if you have them)
-            if (_anim != null)
+            if(_anim != null)
             {
                 _anim.SetFloat(Speed, Mathf.Abs(_rb.velocity.x));
                 _anim.SetBool(Sliding, _isSliding);
             }
+
         }
 
         private void FixedUpdate()
