@@ -1,47 +1,108 @@
 using UnityEngine;
+using Player.Movement;
 
 public class PlayerAnimation : MonoBehaviour
 {
-    private static readonly int Grounded = Animator.StringToHash("Grounded");
-    private static readonly int AirSpeedY = Animator.StringToHash("AirSpeedY");
-    private static readonly int AnimState = Animator.StringToHash("AnimState");
-    private static readonly int Jump = Animator.StringToHash("Jump");
-    private static readonly int Roll = Animator.StringToHash("Roll");
-    private static readonly int Attack1 = Animator.StringToHash("Attack1");
+    [Header("Components")]
     private Animator _animator;
+    private Rigidbody2D _rb;
+    private PlayerMove _playerMove;
+    private PlayerJump _playerJump;
 
-    void Awake()
+    [Header("Animation Parameters")]
+    [SerializeField] private float walkAnimationSpeed = 0.5f;
+    [SerializeField] private float runAnimationSpeed = 1f;
+
+    // Animation parameter names (existing and new)
+    private static readonly int Speed = Animator.StringToHash("Speed");
+    private static readonly int Sliding = Animator.StringToHash("Sliding");
+    private static readonly int IsGrounded = Animator.StringToHash("IsGrounded");
+    private static readonly int VerticalVelocity = Animator.StringToHash("VerticalVelocity");
+    private static readonly int Jump = Animator.StringToHash("Jump");
+    private static readonly int Attack = Animator.StringToHash("Attack");
+    private static readonly int AnimationSpeed = Animator.StringToHash("AnimationSpeed");
+    private static readonly int Land = Animator.StringToHash("Land");
+
+    private bool _wasGrounded;
+
+    private void Awake()
     {
         _animator = GetComponent<Animator>();
+        _rb = GetComponent<Rigidbody2D>();
+        _playerMove = GetComponent<PlayerMove>();
+        _playerJump = GetComponent<PlayerJump>();
     }
 
-    public void SetGrounded(bool grounded)
+    private void Update()
     {
-        _animator.SetBool(Grounded, grounded);
-    }
+        UpdateAnimationParameters();
+        
+        // Handle walk/run animation speed
+        if (Mathf.Abs(_rb.velocity.x) > 0.1f)
+        {
+            bool isRunning = Input.GetKey(KeyCode.LeftShift);
+            _animator.SetFloat(AnimationSpeed, isRunning ? runAnimationSpeed : walkAnimationSpeed);
+        }
+        else
+        {
+            _animator.SetFloat(AnimationSpeed, 1f);
+        }
 
-    public void SetAirSpeed(float ySpeed)
+        // Check for attack input (adjust button as needed)
+        if (Input.GetButtonDown("Fire1"))
+        {
+            TriggerAttack();
+        }
+
+        // Handle jump animation trigger
+        bool isGroundedNow = CheckIfGrounded();
+        if (!_wasGrounded && isGroundedNow)
+        {
+            // Just landed
+            _animator.SetTrigger(Land);
+        }
+        else if (_wasGrounded && !isGroundedNow && _rb.velocity.y > 0)
+        {
+            // Just jumped
+            _animator.SetTrigger(Jump);
+        }
+        _wasGrounded = isGroundedNow;
+    } 
+
+    private void UpdateAnimationParameters()
     {
-        _animator.SetFloat(AirSpeedY, ySpeed);
+        // Update movement parameters (Speed is already set in PlayerMove)
+        _animator.SetFloat(VerticalVelocity, _rb.velocity.y);
+        
+        // Update state parameters
+        _animator.SetBool(IsGrounded, CheckIfGrounded());
+        
+        // Sliding is already handled in PlayerMove
     }
 
-    public void SetRun(bool isRunning)
+    private bool CheckIfGrounded()
     {
-        _animator.SetInteger(AnimState, isRunning ? 1 : 0); // 1 = run, 0 = idle
+        // Use reflection field to get private field from PlayerJump
+        // Or, better approach - create a public property in PlayerJump
+        if (_playerJump != null)
+        {
+            // This uses the ground check from the PlayerJump script
+            return Physics2D.OverlapCircle(
+                _playerJump.groundCheck.position, 
+                _playerJump.groundCheckRadius, 
+                _playerJump.groundLayer);
+        }
+        return false;
     }
 
-    public void PlayJump()
+    // Public methods to trigger animations from other scripts
+    private void TriggerAttack()
+    {
+        _animator.SetTrigger(Attack);
+    }
+
+    public void TriggerJump()
     {
         _animator.SetTrigger(Jump);
-    }
-
-    public void PlayRoll()
-    {
-        _animator.SetTrigger(Roll);
-    }
-
-    public void PlayAttack()
-    {
-        _animator.SetTrigger(Attack1);
     }
 }

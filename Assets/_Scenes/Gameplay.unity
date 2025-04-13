@@ -488,6 +488,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1183355259154406086, guid: 0bf5d65f51a5a7c47805f0437f8fd7a9, type: 3}
   m_PrefabInstance: {fileID: 3336118580337751731}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1974993386 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3079341467305336775, guid: 0bf5d65f51a5a7c47805f0437f8fd7a9, type: 3}
+  m_PrefabInstance: {fileID: 3336118580337751731}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1974993395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974993386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14d1041574c413541b1446d9b0dedba7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkAnimationSpeed: 0.5
+  runAnimationSpeed: 1
 --- !u!1001 &3336118580337751731
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -540,6 +559,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3810599272724877447, guid: 0bf5d65f51a5a7c47805f0437f8fd7a9, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 1705864c64813ab468c478827106a3f0, type: 2}
     - target: {fileID: 8275937234736984535, guid: 0bf5d65f51a5a7c47805f0437f8fd7a9, type: 3}
       propertyPath: deathEffect
       value: 
@@ -547,7 +570,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3079341467305336775, guid: 0bf5d65f51a5a7c47805f0437f8fd7a9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1974993395}
   m_SourcePrefab: {fileID: 100100000, guid: 0bf5d65f51a5a7c47805f0437f8fd7a9, type: 3}
 --- !u!1001 &4724147207040016357
 PrefabInstance:
@@ -559,7 +585,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1251825821702220810, guid: 54cb7109adc53f645b2dd641a80e8fd1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.058057
+      value: -4.068974
       objectReference: {fileID: 0}
     - target: {fileID: 1251825821702220810, guid: 54cb7109adc53f645b2dd641a80e8fd1, type: 3}
       propertyPath: m_LocalPosition.y
