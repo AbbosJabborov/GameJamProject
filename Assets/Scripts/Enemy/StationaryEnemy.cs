@@ -1,18 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class StationaryEnemy : MonoBehaviour
+namespace Enemy
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public class StationaryEnemy : BaseEnemy
+    {   
+        [SerializeField] private float killRange = 1.0f;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void Update()
+        {
+            if (Player != null && Vector2.Distance(transform.position, Player.position) < killRange)
+            {
+                KillPlayer();
+            }
+        }
+
+        // ReSharper disable Unity.PerformanceAnalysis
+        public override void KillPlayer()
+        {
+            //GameManager.Instance.KillPlayer(transform.position); // you'll implement this
+            Debug.Log("Player killed by stationary enemy");
+            // Example in an enemy script
+            Player.GetComponent<Player.PlayerHealthService>()?.KillPlayer(); // Kill the player
+        }
+
+        public override void Attack()
+        {
+            Debug.Log("attack");
+            // play attack anim if needed
+        }
     }
 }
+

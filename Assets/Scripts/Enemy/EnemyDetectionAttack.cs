@@ -1,4 +1,3 @@
-using Player.Movement;
 using UnityEngine;
 
 namespace Enemy
@@ -6,62 +5,55 @@ namespace Enemy
     public class EnemyDetectionAttack : MonoBehaviour
     {
         public float detectionRadius = 5f;
-        public float attackRadius = 1.5f;
-        public int attackDamage = 1;
-        public float attackCooldown = 1f;
 
-        private float _nextAttackTime = 0f;
         private EnemyMovement _movementScript;
         private Transform _player;
-        private PlayerStats _playerStats;
+        private BaseEnemy _baseEnemy;
 
         void Start()
         {
             _movementScript = GetComponent<EnemyMovement>();
+            _baseEnemy = GetComponent<BaseEnemy>();
             GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
 
             if (playerObj != null)
             {
                 _player = playerObj.transform;
-                _playerStats = playerObj.GetComponent<PlayerStats>();
             }
         }
 
         void Update()
         {
-            if (_player == null || _playerStats == null) return;
+            if (_player == null) return;
 
             float distance = Vector2.Distance(transform.position, _player.position);
 
             if (distance <= detectionRadius)
             {
-                _movementScript.shouldChase = distance > attackRadius;
-                _movementScript.target = _player;
+                // Notify BaseEnemy that the player has been detected
+                _baseEnemy?.DetectPlayer(_player);
 
-                if (distance <= attackRadius && Time.time >= _nextAttackTime)
+                // Enable chasing behavior
+                if (_movementScript != null)
                 {
-                    _nextAttackTime = Time.time + attackCooldown;
-                    AttackPlayer();
+                    _movementScript.shouldChase = true;
+                    _movementScript.target = _player;
                 }
             }
             else
             {
-                _movementScript.shouldChase = false;
+                // Stop chasing if the player is out of range
+                if (_movementScript != null)
+                {
+                    _movementScript.shouldChase = false;
+                }
             }
-        }
-
-        void AttackPlayer()
-        {
-            Debug.Log("Enemy attacks!");
-            _playerStats.TakeDamage(attackDamage);
         }
 
         void OnDrawGizmosSelected()
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(transform.position, detectionRadius);
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, attackRadius);
         }
     }
 }

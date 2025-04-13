@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8872266755175848549}
   - component: {fileID: 432879016047572498}
   - component: {fileID: 9054472048967266688}
-  - component: {fileID: 8275937234736984535}
+  - component: {fileID: 1557885814120352754}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -152,8 +152,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.016447008, y: 0.6226922}
-  m_Size: {x: 0.56773126, y: 1.1133311}
+  m_Offset: {x: 0, y: -0.25}
+  m_Size: {x: 0.5, y: 1.1}
   m_Direction: 0
 --- !u!95 &3810599272724877447
 Animator:
@@ -165,7 +165,7 @@ Animator:
   m_GameObject: {fileID: 3079341467305336775}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3c2a5b7097b0fe44394328c0bdb9252e, type: 2}
+  m_Controller: {fileID: 9100000, guid: 1705864c64813ab468c478827106a3f0, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -206,7 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d200d472197258445b33afb28ce54855, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackKey: 324
+  attackKey: 305
   attackRange: 1
   attackDamage: 1
   attackCooldown: 0.5
@@ -235,7 +235,7 @@ MonoBehaviour:
     m_Bits: 64
   fallMultiplier: 2
   lowJumpMultiplier: 1.2
---- !u!114 &8275937234736984535
+--- !u!114 &1557885814120352754
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -244,12 +244,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 3079341467305336775}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d43d2ab56bc968544b4696b7dc81c9a3, type: 3}
+  m_Script: {fileID: 11500000, guid: 52e0ad70c1dafb0488dfe9a3dbc8d6b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3
   deathDelay: 1
-  deathEffect: {fileID: 3626259152316059793, guid: 8cb364e09697dcd43b410fe6ed742c66, type: 3}
+  deathEffect: {fileID: 8649236416844267929, guid: 86278e5354c09e744a276cabc9806c4d, type: 3}
+  onHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onPlayerDied:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4236939728958377873
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,7 +281,7 @@ Transform:
   m_GameObject: {fileID: 4236939728958377873}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.03, y: 0.63, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -306,7 +312,7 @@ Transform:
   m_GameObject: {fileID: 7225507941486204783}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.066, z: 0}
+  m_LocalPosition: {x: 0, y: -0.787, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
