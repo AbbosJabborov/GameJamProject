@@ -22,7 +22,7 @@ namespace Player.Movement
 
         [Header("Components")]
         private Rigidbody2D _rb;
-        private Animator _anim;
+        //private Animator _anim;
         private SpriteRenderer _sr;
 
         private float _moveInput;
@@ -33,7 +33,7 @@ namespace Player.Movement
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
-            _anim = GetComponent<Animator>();
+            //_anim = GetComponent<Animator>();
             _sr = GetComponent<SpriteRenderer>();
         }
 
@@ -55,11 +55,11 @@ namespace Player.Movement
                 _sr.flipX = _moveInput < 0;
 
             // Animation triggers (if you have them)
-            if(_anim != null)
+            /*if(_anim != null)
             {
                 _anim.SetFloat(Speed, Mathf.Abs(_rb.velocity.x));
                 _anim.SetBool(Sliding, _isSliding);
-            }
+            }*/
 
         }
 

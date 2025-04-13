@@ -5,7 +5,7 @@ namespace Player
 {
     public class PlayerAttack : MonoBehaviour
     {
-        public KeyCode attackKey = KeyCode.J;
+        public KeyCode attackKey = KeyCode.RightControl;
         public float attackRange = 1.2f;
         public int attackDamage = 1;
         public float attackCooldown = 0.5f;
